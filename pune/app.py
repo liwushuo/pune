@@ -46,6 +46,8 @@ def configure_extensions(app):
     migrate.init_app(app, db)
 
     sentry.init_app(app)
+    from raven.contrib.celery import register_signal
+    register_signal(sentry)
 
     ldap.init_app(app,
                   users=app.config.get('LDAP_USERS'),
