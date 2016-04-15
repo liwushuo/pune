@@ -1,0 +1,61 @@
+{% extends "web/layout.html" %}
+{% set active_section = "project" %}
+{% block title %}部署记录{% endblock %}
+
+{% block head_content %}
+{% endblock %}
+
+{% block breadcrumb %}
+<div class="m-b-md">
+  <ul class="breadcrumb">
+      <li><a href="/"><i class="fa fa-home"></i> 首页</a></li>
+      <li><a href="{{ url_for('web.list_projects') }}"> 所有项目</a></li>
+      <li><a href="{{ url_for('web.show_project', project_id=project.id) }}"> 项目：{{ project.name }}</a></li>
+      <li><a href=""> 环境：{{ environment.name }}</a></li>
+      <li class="active">部署记录</li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="panel b-a">
+<header class="panel-heading b-b">部署记录</header>
+<table class="table m-b-none">
+  <thead>
+      <tr>
+        <th>ID</th>
+        <th>上线描述</th>
+        <th>对应Release</th>
+        <th>操作人</th>
+        <th>状态</th>
+        <th>创建时间</th>
+        <th>结束时间</th>
+        <th width="100"></th>
+      </tr>
+  </thead>
+  <tbody>
+    {% for deploy in deploys %}
+    <tr>
+      <td>{{ deploy.id }}</td>
+      <td><a href="{{ url_for('web.show_deploy', deploy_id=deploy.id) }}">{{ deploy.name }}</a></td>
+      <td>{{ deploy.release.commit }}</td>
+      <td>{{ deploy.user.username }}</td>
+      <td>{{ deploy_status_cn[deploy.status] }}</td>
+      <td>{{ deploy.created_at | to_iso_datetime }}</td>
+      <td>{{ deploy.finished_at | to_iso_datetime or '无' }}</td>
+      <td></td>
+    </tr>
+    {% else %}
+      <td>还没有部署记录</td>
+    {% endfor %}
+  </tbody>
+</table>
+<footer class="panel-footer">
+  <div class="row">
+    <div class="col-sm-12 text-right text-center-xs">
+    {% include 'pagination.html' %}
+    </div>
+  </div>
+</footer>
+</section>
+{% endblock %}

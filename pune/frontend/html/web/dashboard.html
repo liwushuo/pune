@@ -1,0 +1,23 @@
+{% extends "web/layout.html" %}
+{% set active_section = "dashboard" %}
+{% block title %}仪表盘{% endblock %}
+
+{% block head_content %}
+{% endblock %}
+
+{% block breadcrumb %}
+<div class="m-b-md">
+  <ul class="breadcrumb">
+      <li class="active"><i class="fa fa-home"></i> 首页</li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="panel b-a">
+  <header class="panel-heading b-b">通知</header>
+  <div class="panel-body">
+   {{ '暂无' | safe }}
+  </div>
+</section>
+{% endblock %}

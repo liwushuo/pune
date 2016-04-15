@@ -1,0 +1,31 @@
+<ul class="pagination pagination-sm m-t-none m-b-none">
+  {% if pagination.has_previous() %}
+  <li><a href="{{ pagination.url_for(pagination.page - 1) }}"><i class="fa fa-chevron-left"></i></a></li>
+  {% else %}
+  <li class="disabled"><a href="#"><i class="fa fa-chevron-left"></i></a></li>
+  {% endif %}
+
+  {% if pagination.reach_start() %}
+  <li><a href="{{ pagination.url_for(1) }}">{{ 1 }}</a></li>
+  <li class="disabled"><a href="#">...</a></li>
+  {% endif %}
+
+  {% for page in pagination.pages %}
+    {% if page != pagination.page %}
+    <li><a href="{{ pagination.url_for(page) }}">{{ page }}</a></li>
+    {% else %}
+    <li class="active"><a href="{{ pagination.url_for(page) }}">{{ page }}</a></li>
+    {% endif %}
+  {% endfor %}
+
+  {% if pagination.reach_end() %}
+  <li class="disabled"><a href="#">...</a></li>
+  <li><a href="{{ pagination.url_for(pagination.total_page) }}">{{ pagination.total_page }}</a></li>
+  {% endif %}
+
+  {% if pagination.has_next() %}
+  <li><a href="{{ pagination.url_for(pagination.page + 1) }}"><i class="fa fa-chevron-right"></i></a></li>
+  {% else %}
+  <li class="disabled"><a href="#"><i class="fa fa-chevron-right"></i></a></li>
+  {% endif %}
+</ul>

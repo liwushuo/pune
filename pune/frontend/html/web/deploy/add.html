@@ -1,0 +1,53 @@
+{% extends "web/layout.html" %}
+{% set active_section = "deploy" %}
+{% block title %}创建新的上线任务{% endblock %}
+
+{% block head_content %}
+{% endblock %}
+
+{% block breadcrumb %}
+<div class="m-b-md">
+  <ul class="breadcrumb">
+      <li><a href="/"><i class="fa fa-home"></i> 首页</a></li>
+      <li><a href="{{ url_for('web.list_projects') }}"> 所有项目</a></li>
+      <li><a href="{{ url_for('web.show_project', project_id=project.id) }}"> 项目：{{ project.name }}</a></li>
+      <li class="active"> 创建新的上线任务</li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="panel b-a">
+  <header class="panel-heading b-b">详细内容</header>
+  <form class="form-horizontal" action="{{ url_for('web.add_deploy', project_id=project.id, release_id=release.id) }}" method="post" data-validate="parsley" id="submitForm">
+    <div class="panel-body">
+      <div class="form-group">
+        <label class="col-md-2 control-label">上线描述</label>
+        <div class="col-md-8">
+          <input name="name" class="form-control" data-required="true">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">环境</label>
+        <div class="col-md-8">
+          <select name="environment_id" class="form-control">
+            {% for env in environments %}
+            <option value="{{ env.id }}">{{ env.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+    <footer class="panel-footer">
+      <div class="text-right lter">
+        <button type="submit" class="btn btn-primary">保存</button>
+      </div>
+    </footer>
+  </form>
+</section>
+{% endblock %}
+
+{% block foot_content %}
+<script src="/js/parsley/parsley.min.js"></script>
+<script src="/js/parsley/parsley.extend.js"></script>
+{% endblock %}

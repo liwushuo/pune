@@ -11,6 +11,7 @@ from werkzeug.contrib.fixers import ProxyFix
 
 from pune.app import create_app
 from pune.core import db
+from pune.core import celery
 
 flask_env = os.environ.get('FLASK_ENV', 'dev')
 

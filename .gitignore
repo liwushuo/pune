@@ -88,4 +88,7 @@ docs/_build/
 # PyBuilder
 target/
 
-
+pune/static
+pune/templates
+releases
+logs

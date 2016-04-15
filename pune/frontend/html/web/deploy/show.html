@@ -1,0 +1,44 @@
+{% extends "web/layout.html" %}
+{% set active_section = "deploy" %}
+{% block title %}部署详情{% endblock %}
+
+{% block head_content %}
+{% endblock %}
+
+{% block breadcrumb %}
+<div class="m-b-md">
+  <ul class="breadcrumb">
+      <li><a href="/"><i class="fa fa-home"></i> 首页</a></li>
+      <li><a href="{{ url_for('web.list_projects') }}"> 所有项目</a></li>
+      <li><a href="{{ url_for('web.show_project', project_id=project.id) }}"> 项目：{{ project.name }}</a></li>
+      <li> 环境：{{ environment.name }}</li>
+      <li class="active"> 部署详情</li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="panel b-a">
+  <header class="panel-heading b-b">日志内容</header>
+  <div class="panel-body">
+    <a href="{{ url_for('web.cancel_deploy', deploy_id=deploy.id) }}" type="button" class="btn btn-sm btn-info">中止任务</a>
+    <input type="button" id="auto-scroll" style="color: green;" value="ON">
+  </div>
+  <div style="text-align: center; width: 100%; margin-bottom: 5px;">
+      <div id="log-window" rows=40 style="width: 98%; text-align: left;
+       background-color: #000; color: #fff; font-size: 14px; height: 500px; overflow: auto; padding: 10px;
+       line-height: 18px; margin: 0 auto;"></div>
+  </div>
+</section>
+{% endblock %}
+
+{% block foot_content %}
+<script src="/js/ansi2html.js"></script>
+<script src="/js/tailer.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+  LogTailer.deploy_id = {{ deploy.id }};
+  LogTailer.startReading();
+});
+</script>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "web/layout.html" %}
+{% set active_section = "project" %}
+{% block title %}{{ project.name }}{% endblock %}
+
+{% block head_content %}
+{% endblock %}
+
+{% block breadcrumb %}
+<div class="m-b-md">
+  <ul class="breadcrumb">
+      <li><a href="/"><i class="fa fa-home"></i> 首页</a></li>
+      <li><a href="{{ url_for('web.list_projects') }}"> 所有项目</a></li>
+      <li class="active"> 项目：{{ project.name }}</li>
+  </ul>
+</div>
+<div class="m-b-md">
+  <a href="{{ url_for('web.list_releases_by_project', project_id=project.id) }}" type="button" class="btn btn-sm btn-info">查看打包</a>
+  <a href="{{ url_for('web.add_environment', project_id=project.id) }}" type="button" class="btn btn-sm btn-info">
+      <i class="fa fa-plus"></i>
+      创建环境
+    </a>
+</div>
+{% endblock %}
+
+{% block content %}
+  {% for env in environments %}
+  <section class="panel b-a">
+  <header class="panel-heading b-b">环境：{{ env.name }}</header>
+  <div class="panel-body">
+      <a href="{{ url_for('web.list_deploys_by_environment', environment_id=env.id) }}" type="button" class="btn btn-sm btn-info">部署记录</a>
+      <a href="{{ url_for('web.update_environment', environment_id=env.id) }}" type="button" class="btn btn-sm btn-info">更新</a>
+  </div>
+  <table class="table m-b-none">
+    <thead>
+        <tr>
+          <th>ID</th>
+          <th>上线描述</th>
+          <th>对应Release</th>
+          <th>操作人</th>
+          <th>状态</th>
+          <th>创建时间</th>
+          <th>结束时间</th>
+          <th width="100"></th>
+        </tr>
+    </thead>
+    <tbody>
+      {% for deploy in env.deploys %}
+      <tr>
+        <td>{{ deploy.id }}</td>
+        <td><a href="{{ url_for('web.show_deploy', deploy_id=deploy.id) }}">{{ deploy.name }}</a></td>
+        <td>{{ deploy.release.commit }}</td>
+        <td>{{ deploy.user.username }}</td>
+        <td>{{ deploy_status_cn[deploy.status] }}</td>
+        <td>{{ deploy.created_at | to_iso_datetime }}</td>
+        <td>{{ deploy.finished_at | to_iso_datetime or '无' }}</td>
+        <td></td>
+      </tr>
+      {% else %}
+        <td>还没有部署记录</td>
+      {% endfor %}
+    </tbody>
+  </table>
+  </section>
+  {% else %}
+    <p>还没有项目，快创建一个吧~</p>
+  {% endfor %}
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "web/layout.html" %}
+{% set active_section = "release" %}
+{% block title %}所有打包{% endblock %}
+
+{% block head_content %}
+{% endblock %}
+
+{% block breadcrumb %}
+<div class="m-b-md">
+  <ul class="breadcrumb">
+      <li><a href="/"><i class="fa fa-home"></i> 首页</a></li>
+      <li><a href="{{ url_for('web.list_projects') }}"> 所有项目</a></li>
+      <li><a href="{{ url_for('web.show_project', project_id=project.id) }}"> 项目：{{ project.name }}</a></li>
+      <li class="active"> 所有打包</li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="panel b-a">
+  <header class="panel-heading b-b">打包列表</header>
+<!--   <div class="panel-body">
+  </div> -->
+  <table class="table m-b-none">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>URL</th>
+        <th>commit</th>
+        <th>创建时间</th>
+        <th width="100"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for release in releases %}
+      <tr>
+        <td>{{ release.id }}</td>
+        <td>{{ release.url }}</td>
+        <td>{{ release.commit }}</td>
+        <td>{{ release.created_at | to_iso_datetime }}</td>
+        <td>
+          <a href="{{ url_for('web.add_deploy', project_id=project.id, release_id=release.id) }}">部署</a>
+        </td>
+      </tr>
+      {% else %}
+        <td>还没有打包，快发布一个吧~</td>
+      {% endfor %}
+    </tbody>
+  </table>
+  <footer class="panel-footer">
+    <div class="row">
+      <div class="col-sm-12 text-right text-center-xs">
+      {% include 'pagination.html' %}
+      </div>
+    </div>
+  </footer>
+</section>
+{% endblock %}

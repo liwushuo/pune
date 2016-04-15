@@ -1,0 +1,56 @@
+{% extends "web/layout.html" %}
+{% set active_section = "project" %}
+{% block title %}所有项目{% endblock %}
+
+{% block head_content %}
+{% endblock %}
+
+{% block breadcrumb %}
+<div class="m-b-md">
+  <ul class="breadcrumb">
+      <li><a href="/"><i class="fa fa-home"></i> 首页</a></li>
+      <li class="active"> 所有项目</li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="panel b-a">
+  <header class="panel-heading b-b">项目列表</header>
+
+  <div class="panel-body">
+      <a href="{{ url_for('web.add_project') }}" type="button" class="btn btn-sm btn-info">
+          <i class="fa fa-plus"></i>
+          创建项目
+      </a>
+  </div>
+  <table class="table m-b-none">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>项目名</th>
+        <th>SCM URL</th>
+        <th>创建时间</th>
+        <th>更新时间</th>
+        <th width="100"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for project in projects %}
+      <tr>
+        <td>{{ project.id }}</td>
+        <td><a href="{{ url_for('web.show_project', project_id=project.id) }}">{{ project.name }}</a></td>
+        <td>{{ project.scm_url or '无' }}</td>
+        <td>{{ project.created_at | to_iso_datetime }}</td>
+        <td>{{ project.updated_at | to_iso_datetime or '无' }}</td>
+        <td>
+          <a href="{{ url_for('web.update_project', project_id=project.id) }}">更新</a>
+        </td>
+      </tr>
+      {% else %}
+        <td>还没有项目，快创建一个吧~</td>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

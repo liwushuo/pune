@@ -13,5 +13,9 @@ def runserver(port=5000):
     local("python manage.py runserver -p %s" % port, capture=False)
 
 @task
+def celery():
+    local('celery -A manage.celery worker -l info', capture=False)
+
+@task
 def build_static():
     local('cd pune/frontend && fis release -Lcmpwd ../')

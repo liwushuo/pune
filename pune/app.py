@@ -9,6 +9,8 @@ from flask import Flask
 from pune.core import db
 from pune.core import sentry
 from pune.core import migrate
+from pune.core import ldap
+from pune.core import celery
 
 
 def config_from_env(config=None):
@@ -45,6 +47,12 @@ def configure_extensions(app):
 
     sentry.init_app(app)
 
+    ldap.init_app(app,
+                  users=app.config.get('LDAP_USERS'),
+                  groups=app.config.get('LDAP_GROUPS'))
+
+    celery.init_app(app)
+
 
 def configure_blueprints(app):
     from pune.controllers import web_bp, admin_bp, api_bp
@@ -54,4 +62,7 @@ def configure_blueprints(app):
 
 
 def configure_filters(app):
-    pass
+    from utils.times import to_iso_datetime, to_iso_date
+
+    app.jinja_env.filters['to_iso_datetime'] = to_iso_datetime
+    app.jinja_env.filters['to_iso_date'] = to_iso_date
