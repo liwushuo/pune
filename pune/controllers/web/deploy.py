@@ -50,7 +50,7 @@ def add_deploy(project_id, release_id):
 
     cmd = project['cmd']
     cmd = cmd.replace('{environment}', env['name'])
-    cmd = cmd.replace('{url}', release['url'])
+    cmd = cmd.replace('{url}', url_for('web.get_release_file', release_id=release.id, _external=True))
     run_deploy.apply_async((cmd, project['cwd'], deploy['id']), task_id=task_id)
     return redirect(url_for('web.show_deploy', deploy_id=deploy['id']))
 
