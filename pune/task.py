@@ -19,6 +19,7 @@ def run_deploy(cmd, cwd, deploy_id):
         logfile.close()
     except:
         DeployService.mark_failed(deploy_id)
+        raise
 
     if p.returncode == 0:
         DeployService.mark_succeeded(deploy_id)
