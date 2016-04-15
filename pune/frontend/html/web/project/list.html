@@ -44,7 +44,7 @@
         <td>{{ project.created_at | to_iso_datetime }}</td>
         <td>{{ project.updated_at | to_iso_datetime or '无' }}</td>
         <td>
-          <a href="{{ url_for('web.update_project', project_id=project.id) }}">更新</a>
+          <a href="{{ url_for('web.update_project', project_id=project.id) }}">设置</a>
         </td>
       </tr>
       {% else %}

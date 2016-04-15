@@ -35,7 +35,7 @@
       {% for release in releases %}
       <tr>
         <td>{{ release.id }}</td>
-        <td>{{ release.url }}</td>
+        <td><a href="{{ url_for('web.get_release_file', release_id=release.id, _external=True) }}">{{ url_for('web.get_release_file', release_id=release.id, _external=True) }}</a></td>
         <td>{{ release.commit }}</td>
         <td>{{ release.created_at | to_iso_datetime }}</td>
         <td>

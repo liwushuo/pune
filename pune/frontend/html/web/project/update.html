@@ -32,6 +32,18 @@
           <input name="scm_url" class="form-control" value="{{ project.scm_url }}">
         </div>
       </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">部署命令</label>
+        <div class="col-md-8">
+          <input name="cmd" class="form-control" value="{{ project.cmd }}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-2 control-label">运行目录</label>
+        <div class="col-md-8">
+          <input name="cwd" class="form-control" value="{{ project.cwd }}">
+        </div>
+      </div>
     </div>
     <footer class="panel-footer">
       <div class="text-right lter">
@@ -39,6 +51,13 @@
       </div>
     </footer>
   </form>
+</section>
+
+<section class="panel b-a">
+  <header class="panel-heading b-b">上传打包方法</header>
+  <div class="panel-body">
+   <pre>curl -X POST -F "commit={commit}" -F "file=@{file_path}" {{ url_for('api.add_release', project_id=project.id, _external=True)}}</pre>
+  </div>
 </section>
 
 <section class="panel panel-danger">

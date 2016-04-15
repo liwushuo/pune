@@ -21,7 +21,7 @@
 <section class="panel b-a">
   <header class="panel-heading b-b">日志内容</header>
   <div class="panel-body">
-    <a href="{{ url_for('web.cancel_deploy', deploy_id=deploy.id) }}" type="button" class="btn btn-sm btn-info">中止任务</a>
+    <a href="<!-- {{ url_for('web.cancel_deploy', deploy_id=deploy.id) }} -->" type="button" class="btn btn-sm btn-info">中止任务（暂时不支持）</a>
     <input type="button" id="auto-scroll" style="color: green;" value="ON">
   </div>
   <div style="text-align: center; width: 100%; margin-bottom: 5px;">
