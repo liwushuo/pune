@@ -13,7 +13,7 @@ class ProjectService(object):
         return project and project.to_dict()
 
     @staticmethod
-    def add(name, scm_url, cmd):
+    def add(name, scm_url, cmd, cwd):
         project = Project(name=name, scm_url=scm_url, cmd=cmd, cwd=cwd)
         db.session.add(project)
         db.session.commit()
