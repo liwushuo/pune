@@ -28,7 +28,6 @@ def list_releases_by_project(project_id):
 
 
 @bp.route('/releases/<int:release_id>/file')
-@web_auth_required
 def get_release_file(release_id):
     release = ReleaseService.get(release_id)
     file_path = os.path.join(current_app.config['RELEASE_UPLOAD_FOLDER'], release['url'])
